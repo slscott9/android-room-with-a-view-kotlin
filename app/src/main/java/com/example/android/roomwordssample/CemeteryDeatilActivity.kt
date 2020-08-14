@@ -41,7 +41,9 @@ class CemeteryDeatilActivity : AppCompatActivity() {
         binding.graveRecyclerView.adapter = adapter
 
         binding.addGraveFab.setOnClickListener{
-            val intent = Intent(this, )
+            val intent = Intent(this, CreateGraveActivity::class.java)
+            intent.putExtra("cemetery_id", cemeteryId)
+            startActivity(intent)
         }
 
     }
