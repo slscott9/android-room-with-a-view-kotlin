@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package com.example.android.roomwordssample
+package com.example.android.roomwordssample.database
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import com.example.android.roomwordssample.database.Cemetery
 
 
 /**
@@ -33,18 +34,24 @@ import androidx.room.Query;
  */
 
 @Dao
-interface WordDao {
+interface CemeteryDao {
 
     // LiveData is a data holder class that can be observed within a given lifecycle.
     // Always holds/caches latest version of data. Notifies its active observers when the
     // data has changed. Since we are getting all the contents of the database,
     // we are notified whenever any of the database contents have changed.
-    @Query("SELECT * from word_table ORDER BY word ASC")
-    fun getAlphabetizedWords(): LiveData<List<Word>>
+    @Query("SELECT * from cemetery_table")
+    fun getAllCemeteries(): LiveData<List<Cemetery>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(word: Word)
+    fun insert(cem: Cemetery)
 
-    @Query("DELETE FROM word_table")
+    @Query("DELETE FROM cemetery_table")
     fun deleteAll()
+
+    @Query("select * from graves where id= :cemeteryId")
+    fun getAllGravesWithId(cemeteryId: Int) : LiveData<List<Grave>>
+
+    @Query("select * from  cemetery_table where row_number= :rowNum")
+    fun getCemeteryWithRowNum(rowNum: Int) : Cemetery
 }

@@ -13,20 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.roomwordssample
+package com.example.android.roomwordssample.database
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.example.android.roomwordssample.database.Cemetery
+import com.example.android.roomwordssample.database.CemeteryDao
 
 /**
  * Abstracted Repository as promoted by the Architecture Guide.
  * https://developer.android.com/topic/libraries/architecture/guide.html
  */
-class WordRepository(private val wordDao: WordDao) {
+class CemeteryRepo(private val cemDao: CemeteryDao) {
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
-    val allWords: LiveData<List<Word>> = wordDao.getAlphabetizedWords()
+    val allCems: LiveData<List<Cemetery>> = cemDao.getAllCemeteries()
 
     // You must call this on a non-UI thread or your app will crash. So we're making this a
     // suspend function so the caller methods know this.
@@ -34,7 +37,20 @@ class WordRepository(private val wordDao: WordDao) {
     // thread, blocking the UI.
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun insert(word: Word) {
-        wordDao.insert(word)
+    suspend fun insert(word: Cemetery) {
+        cemDao.insert(word)
     }
+
+    @WorkerThread
+    suspend fun getGravesWithId(cemeteryId: Int): LiveData<List<Grave>>{
+        return cemDao.getAllGravesWithId(cemeteryId)
+    }
+
+    suspend fun getCemeteryWithId(id: Int): Cemetery{
+        return cemDao.getCemeteryWithRowNum(id)
+    }
+
+
+
+
 }
