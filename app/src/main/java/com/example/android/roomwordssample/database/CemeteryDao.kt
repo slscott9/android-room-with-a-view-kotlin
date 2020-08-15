@@ -44,12 +44,15 @@ interface CemeteryDao {
     fun getAllCemeteries(): LiveData<List<Cemetery>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(cem: Cemetery)
+    fun insertCemetery(cem: Cemetery)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertGrave(grave: Grave)
 
     @Query("DELETE FROM cemetery_table")
     fun deleteAll()
 
-    @Query("select * from graves where id= :cemeteryId")
+    @Query("select * from graves where cemeteryId= :cemeteryId")
     fun getAllGravesWithId(cemeteryId: Int) : LiveData<List<Grave>>
 
     @Query("select * from  cemetery_table where row_number= :rowNum")

@@ -30,7 +30,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class CemeteryListActivity : AppCompatActivity() {
 
-    private val newWordActivityRequestCode = 1
     private lateinit var viewModel: CemeteryViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,11 +47,11 @@ class CemeteryListActivity : AppCompatActivity() {
         // Get a new or existing ViewModel from the ViewModelProvider.
         viewModel = ViewModelProvider(this).get(CemeteryViewModel::class.java)
 
-        // Add an observer on the LiveData returned by getAlphabetizedWords.
+        // Add an observer on the LiveData returned by the getAllCems
         // The onChanged() method fires when the observed data changes and the activity is
         // in the foreground.
         viewModel.allCems.observe(this, Observer { words ->
-            // Update the cached copy of the words in the adapter.
+            // When there is a change in the List of Cemeteries send it to the adapter to update the recycler view
             words?.let { adapter.submitList(it) }
         })
 
@@ -65,22 +64,4 @@ class CemeteryListActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, intentData)
-//
-//        if (requestCode == newWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
-//            intentData?.let { data ->
-//                val word = Word(data.getStringExtra(NewWordActivity.EXTRA_REPLY))
-//                wordViewModel.insert(word)
-//                Unit
-//            }
-//        } else {
-//            Toast.makeText(
-//                    applicationContext,
-//                    R.string.empty_not_saved,
-//                    Toast.LENGTH_LONG
-//            ).show()
-//        }
-//    }
 }

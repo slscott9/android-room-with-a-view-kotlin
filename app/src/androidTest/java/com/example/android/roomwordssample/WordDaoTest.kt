@@ -71,7 +71,7 @@ class WordDaoTest {
     @Throws(Exception::class)
     fun insertAndGetWord() {
         val cemetery = Cemetery("word")
-        wordDao.insert("name")
+        wordDao.insertCemetery("name")
         val allWords = wordDao.getAllCemeteries().waitForValue()
         assertEquals(allWords[0], cemetery.name)
     }
@@ -80,9 +80,9 @@ class WordDaoTest {
     @Throws(Exception::class)
     fun getAllWords() {
         val cemetery = Cemetery("aaa")
-        wordDao.insert(cemetery)
+        wordDao.insertCemetery(cemetery)
         val cemetery2 = Cemetery("bbb")
-        wordDao.insert(cemetery)
+        wordDao.insertCemetery(cemetery)
         val allWords = wordDao.getAllCemeteries().waitForValue()
         assertEquals(allWords[0].name, cemetery.name)
         assertEquals(allWords[1].name, cemetery2.name)
@@ -92,9 +92,9 @@ class WordDaoTest {
     @Throws(Exception::class)
     fun deleteAll() {
         val word = Cemetery("word")
-        wordDao.insert(word)
+        wordDao.insertCemetery(word)
         val word2 = Cemetery("word2")
-        wordDao.insert(word2)
+        wordDao.insertCemetery(word2)
         wordDao.deleteAll()
         val allWords = wordDao.getAllCemeteries().waitForValue()
         assertTrue(allWords.isEmpty())

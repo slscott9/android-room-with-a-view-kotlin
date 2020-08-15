@@ -15,11 +15,7 @@
  */
 package com.example.android.roomwordssample.database
 
-import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.example.android.roomwordssample.database.Cemetery
-import com.example.android.roomwordssample.database.CemeteryDao
 
 /**
  * Abstracted Repository as promoted by the Architecture Guide.
@@ -35,18 +31,20 @@ class CemeteryRepo(private val cemDao: CemeteryDao) {
     // suspend function so the caller methods know this.
     // Like this, Room ensures that you're not doing any long running operations on the main
     // thread, blocking the UI.
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun insert(word: Cemetery) {
-        cemDao.insert(word)
+
+    fun insertCemetery(word: Cemetery) {
+        cemDao.insertCemetery(word)
     }
 
-    @WorkerThread
-    suspend fun getGravesWithId(cemeteryId: Int): LiveData<List<Grave>>{
+    fun insertGrave(grave: Grave){
+        cemDao.insertGrave(grave)
+    }
+
+    fun getGravesWithId(cemeteryId: Int): LiveData<List<Grave>>{
         return cemDao.getAllGravesWithId(cemeteryId)
     }
 
-    suspend fun getCemeteryWithId(id: Int): Cemetery{
+    fun getCemeteryWithId(id: Int): Cemetery{
         return cemDao.getCemeteryWithRowNum(id)
     }
 

@@ -63,16 +63,23 @@ class CemeteryViewModel(application: Application) : AndroidViewModel(application
     /**
      * Launching a new coroutine to insert the data in a non-blocking way
      */
-    fun insert(word: Cemetery) = viewModelScope.launch(Dispatchers.IO) {
-        repository.insert(word)
+    fun insertCemetery(word: Cemetery) = viewModelScope.launch(Dispatchers.IO) {
+        repository.insertCemetery(word)
     }
 
 
     //Call this when we need grave list and then observe the list from CemeteryDetailActivity
-     fun getGraves(id: Int){
+     fun getGraveList(id: Int){
         viewModelScope.launch(Dispatchers.IO) {
-            gravesWithId = repository.getGravesWithId(id)
+            gravesWithId = getGraves(id)
 
+        }
+    }
+
+    private suspend fun getGraves(id: Int): LiveData<List<Grave>>{
+        return withContext(Dispatchers.IO){
+            val gravesList = repository.getGravesWithId(id)
+            gravesList
         }
     }
 
@@ -87,6 +94,18 @@ class CemeteryViewModel(application: Application) : AndroidViewModel(application
             val cemetery = repository.getCemeteryWithId(id)
 
             cemetery
+        }
+    }
+
+    fun insertGrave(grave: Grave){
+        uiScope.launch {
+            susInsertGrave(grave)
+        }
+    }
+
+    private suspend fun susInsertGrave(grave: Grave){
+        withContext(Dispatchers.IO){
+            repository.insertGrave(grave)
         }
     }
 

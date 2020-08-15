@@ -16,18 +16,13 @@
 
 package com.example.android.roomwordssample
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import android.text.TextUtils
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.roomwordssample.database.Cemetery
-import com.example.android.roomwordssample.database.Grave
 import com.example.android.roomwordssample.databinding.ActivityNewCemeteryBinding
 import com.example.android.roomwordssample.viewmodel.CemeteryViewModel
 
@@ -50,7 +45,6 @@ class NewCemeteryActivity : AppCompatActivity() {
 
 
         binding.addCemButton.setOnClickListener {
-            val replyIntent = Intent()
             if (binding.nameEditText.text.isNullOrEmpty() ||
                     binding.locationEditText.text.isNullOrEmpty() ||
                     binding.stateEditText.text.isNullOrEmpty() ||
@@ -84,7 +78,7 @@ class NewCemeteryActivity : AppCompatActivity() {
                                 spot = spot,
                                 gps = gps,
                                 firstYear = firstYear)
-                viewModel.insert(cemetery)
+                viewModel.insertCemetery(cemetery)
                 finish()
 
 

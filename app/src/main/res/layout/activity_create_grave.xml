@@ -13,10 +13,11 @@
     tools:context=".CreateGraveActivity">
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/floatingActionButton"
+        app:layout_constraintBottom_toTopOf="@+id/createGraveFAB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -73,8 +74,9 @@
                     android:layout_height="wrap_content"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
+
                     android:hint="@string/born"
-                    android:inputType="text"
+                    android:inputType="date"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="@+id/lastNameet"
                     app:layout_constraintStart_toStartOf="@+id/lastNameet"
@@ -87,6 +89,7 @@
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:hint="@string/died"
+                    android:inputType="date"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="@+id/bornEt"
                     app:layout_constraintStart_toStartOf="@+id/bornEt"
@@ -99,7 +102,7 @@
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:hint="@string/married"
-                    android:inputType="text"
+                    android:inputType="date"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="@+id/deathYearEt"
                     app:layout_constraintStart_toStartOf="@+id/deathYearEt"
@@ -193,7 +196,7 @@
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/createGraveFAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="40dp"
@@ -202,7 +205,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_save_24" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

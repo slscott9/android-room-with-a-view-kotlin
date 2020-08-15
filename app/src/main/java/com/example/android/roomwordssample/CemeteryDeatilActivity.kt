@@ -3,6 +3,7 @@ package com.example.android.roomwordssample
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,17 +16,20 @@ class CemeteryDeatilActivity : AppCompatActivity() {
 
     private lateinit var viewModel: CemeteryViewModel
     private lateinit var binding: ActivityCemeteryDeatilBinding
+    private var cemeteryId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_cemetery_deatil)
         binding.lifecycleOwner = this
         val cemeteryId = intent.getIntExtra("cemetery_id", 0)
+        Log.i("CemeteryDetailActivity", "cem id is $cemeteryId")
 
         viewModel = ViewModelProvider(this).get(CemeteryViewModel::class.java)
         binding.cemeteryViewModel = viewModel
         viewModel.getCemetery(cemeteryId)
-        viewModel.getGraves(cemeteryId)
+        viewModel.getGraveList(cemeteryId)
+
 
         val adapter = GraveListAdapter(GraveListListener {
             val intent = Intent(this, CemeteryDeatilActivity::class.java)
@@ -47,4 +51,5 @@ class CemeteryDeatilActivity : AppCompatActivity() {
         }
 
     }
+
 }
