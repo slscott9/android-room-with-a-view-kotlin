@@ -16,6 +16,7 @@
 package com.example.android.roomwordssample.database
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 
 /**
  * Abstracted Repository as promoted by the Architecture Guide.
@@ -40,7 +41,7 @@ class CemeteryRepo(private val cemDao: CemeteryDao) {
         cemDao.insertGrave(grave)
     }
 
-    fun getGravesWithId(cemeteryId: Int): LiveData<List<Grave>>{
+    fun getGravesWithId(cemeteryId: Int): List<Grave>{
         return cemDao.getAllGravesWithId(cemeteryId)
     }
 

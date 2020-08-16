@@ -22,13 +22,12 @@ class CemeteryDeatilActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_cemetery_deatil)
         binding.lifecycleOwner = this
-        val cemeteryId = intent.getIntExtra("cemetery_id", 0)
+         cemeteryId = intent.getIntExtra("cemetery_id", 0)
         Log.i("CemeteryDetailActivity", "cem id is $cemeteryId")
 
         viewModel = ViewModelProvider(this).get(CemeteryViewModel::class.java)
         binding.cemeteryViewModel = viewModel
-        viewModel.getCemetery(cemeteryId)
-        viewModel.getGraveList(cemeteryId)
+        viewModel.getCemetery(cemeteryId!!)
 
 
         val adapter = GraveListAdapter(GraveListListener {
@@ -38,7 +37,7 @@ class CemeteryDeatilActivity : AppCompatActivity() {
         })
 
         //observe the grave list if it is not null
-        viewModel.gravesWithId?.observe(this, Observer {
+        viewModel.gravesWithId.observe(this, Observer {
             adapter.submitList(it)
         })
 
@@ -46,9 +45,15 @@ class CemeteryDeatilActivity : AppCompatActivity() {
 
         binding.addGraveFab.setOnClickListener{
             val intent = Intent(this, CreateGraveActivity::class.java)
-            intent.putExtra("cemetery_id", cemeteryId)
+            intent.putExtra("cemetery_id", cemeteryId!!)
             startActivity(intent)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        cemeteryId?.let { viewModel.getGraveList(it) }
+
 
     }
 

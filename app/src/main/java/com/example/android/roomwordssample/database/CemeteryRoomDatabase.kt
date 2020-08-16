@@ -26,7 +26,7 @@ import kotlinx.coroutines.CoroutineScope
  * This is the backend. The database. This used to be done by the OpenHelper.
  * The fact that this has very few comments emphasizes its coolness.
  */
-@Database(entities = [Cemetery::class, Grave::class], version = 5, exportSchema = false)
+@Database(entities = [Cemetery::class, Grave::class], version = 6, exportSchema = false)
 abstract class CemeteryRoomDatabase : RoomDatabase() {
 
     abstract fun wordDao(): CemeteryDao

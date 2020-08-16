@@ -1,5 +1,6 @@
 package com.example.android.roomwordssample.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -14,11 +15,14 @@ class GraveListAdapter(val clickListener: GraveListListener): ListAdapter<Grave,
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = GraveListItemBinding.inflate(layoutInflater, parent, false)
         return ViewHolder(binding)
+
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(item, clickListener)
+        Log.i("GraveListAdapter", "GraveListAdapter onBind called")
+
     }
 
 
@@ -27,6 +31,8 @@ class GraveListAdapter(val clickListener: GraveListListener): ListAdapter<Grave,
             binding.grave = item
             binding.clickListener = listener
             binding.executePendingBindings()
+            Log.i("GraveListAdapter", "GraveListAdapter onBind called")
+
         }
     }
 }

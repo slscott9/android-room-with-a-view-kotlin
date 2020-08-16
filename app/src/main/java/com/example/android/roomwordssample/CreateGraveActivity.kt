@@ -75,7 +75,7 @@ class CreateGraveActivity : AppCompatActivity(), View.OnClickListener{
                                 graveNumber = binding.graveNumEt.text.toString(),
                                 cemeteryId = cemeteryId)
                 viewModel.insertGrave(grave)
-                viewModel.getGraveList(cemeteryId)
+                //viewModel.getGraveList(cemeteryId)
                 finish()
             }
         }

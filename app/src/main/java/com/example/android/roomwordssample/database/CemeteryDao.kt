@@ -17,6 +17,7 @@
 package com.example.android.roomwordssample.database
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -43,17 +44,17 @@ interface CemeteryDao {
     @Query("SELECT * from cemetery_table")
     fun getAllCemeteries(): LiveData<List<Cemetery>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert
     fun insertCemetery(cem: Cemetery)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert
     fun insertGrave(grave: Grave)
 
     @Query("DELETE FROM cemetery_table")
     fun deleteAll()
 
-    @Query("select * from graves where cemeteryId= :cemeteryId")
-    fun getAllGravesWithId(cemeteryId: Int) : LiveData<List<Grave>>
+    @Query("select * from graves where cemeteryId= :cemId")
+    fun getAllGravesWithId(cemId: Int) : List<Grave>
 
     @Query("select * from  cemetery_table where row_number= :rowNum")
     fun getCemeteryWithRowNum(rowNum: Int) : Cemetery

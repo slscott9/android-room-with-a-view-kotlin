@@ -17,10 +17,8 @@
 package com.example.android.roomwordssample.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import android.util.Log
+import androidx.lifecycle.*
 import com.example.android.roomwordssample.database.Cemetery
 import com.example.android.roomwordssample.database.CemeteryRepo
 import com.example.android.roomwordssample.database.CemeteryRoomDatabase
@@ -45,7 +43,11 @@ class CemeteryViewModel(application: Application) : AndroidViewModel(application
     val allCems: LiveData<List<Cemetery>>
 
         //initailized from CemteryDetailActivity we observe it when it is not null
-    var gravesWithId: LiveData<List<Grave>>? = null
+
+    private val _gravesWithId = MutableLiveData<List<Grave>>()
+    val gravesWithId: LiveData<List<Grave>>
+    get() =  _gravesWithId
+
 
     private val _cemetery = MutableLiveData<Cemetery>()
     val cemetery: LiveData<Cemetery>
@@ -67,22 +69,22 @@ class CemeteryViewModel(application: Application) : AndroidViewModel(application
         repository.insertCemetery(word)
     }
 
-
     //Call this when we need grave list and then observe the list from CemeteryDetailActivity
-     fun getGraveList(id: Int){
-        viewModelScope.launch(Dispatchers.IO) {
-            gravesWithId = getGraves(id)
+    fun getGraveList(id: Int){
+        uiScope.launch {
+            _gravesWithId.value = getGraves(id)
+            Log.i("ViewModel", "cemetery id is $id")
 
         }
     }
 
-    private suspend fun getGraves(id: Int): LiveData<List<Grave>>{
+    private suspend fun getGraves(id: Int): List<Grave>{
         return withContext(Dispatchers.IO){
-            val gravesList = repository.getGravesWithId(id)
-            gravesList
+            val graveList = repository.getGravesWithId(id)
+            graveList
+
         }
     }
-
     fun getCemetery(id: Int){
         uiScope.launch {
              _cemetery.value = getCemeteryWithId(id)

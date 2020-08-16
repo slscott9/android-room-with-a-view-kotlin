@@ -1,5 +1,6 @@
 package com.example.android.roomwordssample.utils
 
+import android.util.Log
 import android.widget.TextView
 import androidx.databinding.Bindable
 import androidx.databinding.BindingAdapter
@@ -39,6 +40,8 @@ fun TextView.setGraveLast(item: Grave?){
     item?.lastName?.let {
         text = item.lastName
     }
+
+    Log.i("BindingAdapter", "setGrave last name called")
 }
 
 @BindingAdapter("setGraveBirth")
